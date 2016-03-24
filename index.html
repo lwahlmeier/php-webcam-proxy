@@ -1,0 +1,54 @@
+<html>
+<body>
+<script>
+var cams = ["wc2", "wc1"];
+
+for(var id in cams) {
+  var mainDiv =  document.createElement('div');
+  mainDiv.style.float = "left";
+  mainDiv.style.border = "solid black 1px";
+  var img = new Image();
+  img.src = "webcamProxy.php/?webcam="+cams[id]+"&cmd=mjpeg";
+  mainDiv.appendChild(img);
+  mainDiv.appendChild(document.createElement('br'));
+  var up =  document.createElement('a');
+  up.innerHTML = "Up";
+  up.href = "javascript:void(0)";
+  up.setAttribute("onclick","wc1_move('"+cams[id]+"', 'Up')");
+  mainDiv.appendChild(up);
+  mainDiv.appendChild(document.createElement('br'));
+  var left =  document.createElement('a');
+  left.innerHTML = "Left";
+  left.href = "javascript:void(0)";
+  left.setAttribute("onclick","wc1_move('"+cams[id]+"', 'Left')");
+  mainDiv.appendChild(left);
+  mainDiv.appendChild(document.createElement('br'));
+  var right =  document.createElement('a');
+  right.innerHTML = "Right";
+  right.href = "javascript:void(0)";
+  right.setAttribute("onclick","wc1_move('"+cams[id]+"', 'Right')");
+  mainDiv.appendChild(right);
+  mainDiv.appendChild(document.createElement('br'));
+  var down =  document.createElement('a');
+  down.innerHTML = "Down";
+  down.href = "javascript:void(0)";
+  down.setAttribute("onclick","wc1_move('"+cams[id]+"', 'Down')");
+  mainDiv.appendChild(down);
+  document.body.appendChild(mainDiv);
+}
+
+function wc1_move(wc, d) {
+	var oReq = new XMLHttpRequest();
+	oReq.open('GET', 'webcamProxy.php?webcam='+wc+'&cmd=move'+d, true);
+	oReq.send();
+	window.setTimeout(wc1_stop, 1000, wc, d);
+}
+function wc1_stop(wc, d) {
+	var oReq = new XMLHttpRequest();
+	oReq.open('GET', 'webcamProxy.php?webcam='+wc+'&cmd=stop'+d, true);
+	oReq.send();
+}
+
+</script>
+</body>
+</html>
