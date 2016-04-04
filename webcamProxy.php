@@ -42,7 +42,7 @@ $configFile = parse_ini_string($tmp, true);
 $currentConfig = $configFile[$_GET['webcam']];
 
 header("Connection: close");
-header("Content-Type: multipart/x-mixed-replace;boundary=ipcamera");
+header("Content-Type: multipart/x-mixed-replace;boundary=".$currentConfig['boundary']);
 
 
 $currentConfig = UpdateConfigStrings($currentConfig);
